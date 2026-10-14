@@ -3,7 +3,7 @@ import {
   ArrowDownToLine, ArrowRight, BadgeCheck, BookOpenText, BriefcaseBusiness, CalendarDays,
   Check, CheckCircle2, ChevronDown, ClipboardList, Clock3, FileText, LayoutDashboard, LockKeyhole, LogOut,
   Mail, MapPin, MessageSquareText, Search, ShieldCheck, Sparkles, Target, TrendingUp,
-  Bell, Building2, Copy, Flag, Plus, ScanSearch, Settings, Trash2, Upload, UserRound, Users, WandSparkles, Bookmark, type LucideIcon,
+  Bell, Building2, Copy, Flag, LifeBuoy, Moon, Plus, ScanSearch, Settings, Sun, Trash2, Upload, UserRound, Users, WandSparkles, Bookmark, type LucideIcon,
 } from 'lucide-react';
 import type { Session } from '@supabase/supabase-js';
 import { aiService, type EmploymentType, type ExperienceLevel, type JobMatch, type ResumeAnalysis, type SkillGapItem, type WorkplaceMode } from './lib/ai';
@@ -19,6 +19,7 @@ import './AIConsent.css';
 import './AtsMatching.css';
 import './FormControls.css';
 import './JobSearchAnalyzer.css';
+import './Settings.css';
 
 type Section = 'dashboard' | 'resume' | 'ats' | 'jobs' | 'match' | 'job-description' | 'gap' | 'roadmap' | 'tailor' | 'cover' | 'interview' | 'applications' | 'notifications' | 'admin' | 'profile' | 'settings';
 type ApplicationStatus = 'Saved' | 'Applied' | 'Shortlisted' | 'Interview' | 'Selected' | 'Rejected';
@@ -128,6 +129,10 @@ function LandingPage(props: { onSignIn: () => void; onDemo: () => void }) {
   return <main className="landing-page"><nav className="landing-nav"><button className="landing-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><span className="career-brand-mark">T</span><span><strong>TalentHUNT</strong><small>CAREER STUDIO</small></span></button><div className="landing-nav-links"><a href="#how-it-works">How it works</a><a href="#features">Features</a><a href="#faq">FAQ</a></div><div className="landing-nav-actions"><button className="landing-login" onClick={props.onSignIn}>Sign in</button><button className="button button-primary" onClick={props.onDemo}>Explore demo <ArrowRight size={15} /></button></div></nav><section className="landing-hero"><div className="landing-hero-copy"><p className="section-kicker">YOUR CAREER, IN FOCUS</p><h1>Your Resume. Your Skills. <em>Your Next Opportunity.</em></h1><p className="landing-subtitle">TalentHUNT AI analyzes your resume, finds relevant opportunities, identifies skill gaps, prepares you for interviews, and helps you manage your entire job search.</p><div className="landing-hero-actions"><button className="button button-primary" onClick={props.onSignIn}>Build my career workspace <ArrowRight size={16} /></button><button className="landing-text-action" onClick={props.onDemo}>See the sample workspace <Sparkles size={16} /></button></div><div className="landing-proof"><span><CheckCircle2 size={15} />Evidence-first suggestions</span><span><ShieldCheck size={15} />Private by design</span></div></div><div className="landing-hero-visual" aria-label="TalentHUNT career dashboard preview"><div className="landing-orbit orbit-a" /><div className="landing-orbit orbit-b" /><div className="landing-preview-card"><div className="preview-topline"><span /><span /><span /></div><p className="section-kicker">CAREER READINESS</p><strong>Make your next move clearer.</strong><div className="preview-score"><span>ATS fit</span><b>92</b><div><i style={{ width: '92%' }} /></div></div><div className="preview-lines"><span /><span /><span /><span /></div></div><div className="landing-float-card"><CheckCircle2 size={16} /><span><strong>3 roles worth exploring</strong><small>Matched to your evidence</small></span></div></div></section><section id="how-it-works" className="landing-section landing-process"><div className="landing-section-heading"><p className="section-kicker">HOW IT WORKS</p><h2>From scattered effort to a focused search.</h2><p>One calm workspace for the decisions that move your career forward.</p></div><div className="process-grid"><div><span>01</span><strong>Understand your profile</strong><p>Upload your resume and review what the parser found.</p></div><div><span>02</span><strong>Find your fit</strong><p>Compare roles, requirements, skill gaps, and match factors.</p></div><div><span>03</span><strong>Take the next step</strong><p>Build a roadmap, prepare, tailor, and track your applications.</p></div></div></section><section id="features" className="landing-section"><div className="landing-section-heading"><p className="section-kicker">THE CAREER STUDIO</p><h2>Everything you need to keep momentum.</h2></div><div className="feature-grid">{features.map(([number, title, description]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section><section className="landing-section landing-testimonials"><div className="landing-section-heading"><p className="section-kicker">A BETTER SEARCH FEELS DIFFERENT</p><h2>Less guesswork. More useful progress.</h2></div><div className="testimonial-grid"><blockquote>“The gap analysis gave me a realistic order for what to learn instead of another overwhelming list.”<cite>Early-career software developer</cite></blockquote><blockquote>“I could see exactly which parts of my resume supported a role before I spent time applying.”<cite>Product-minded engineer</cite></blockquote><blockquote>“The tracker made follow-ups visible without turning the search into another full-time job.”<cite>Career switcher</cite></blockquote></div></section><section id="faq" className="landing-section landing-faq"><div className="landing-section-heading"><p className="section-kicker">FAQ</p><h2>Clear expectations from the start.</h2></div><div className="faq-grid"><details open><summary>Does TalentHUNT invent resume qualifications?</summary><p>No. Suggestions and drafts are constrained to detected evidence and clearly marked for review.</p></details><details><summary>Can I try it without connecting an account?</summary><p>Yes. Explore the local demo with sample data. Account features use Supabase Auth when configured.</p></details><details><summary>Are the job listings live?</summary><p>The current workspace uses attributed sample listings until a licensed live job source is connected.</p></details><details><summary>Is my resume stored?</summary><p>Local parsing keeps text in memory. Authenticated AI requests go through secured Edge Functions and follow provider retention terms.</p></details></div></section><section className="landing-cta"><p className="section-kicker">READY WHEN YOU ARE</p><h2>Make the next step specific.</h2><p>Bring your resume, your questions, and the role you want to grow into.</p><button className="button button-white" onClick={props.onSignIn}>Enter your workspace <ArrowRight size={16} /></button></section><footer className="landing-footer"><span>TalentHUNT · CAREER STUDIO</span><span>Evidence first. Progress always.</span></footer></main>;
 }
 
+function appRedirectUrl() {
+  return new URL(import.meta.env.BASE_URL, window.location.origin).toString();
+}
+
 function AuthScreen(props: { onDemo: () => void; onBack: () => void }) {
   const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
   const [email, setEmail] = useState('');
@@ -152,7 +157,7 @@ function AuthScreen(props: { onDemo: () => void; onBack: () => void }) {
         const { data, error: authError } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { full_name: fullName, career_goal: role }, emailRedirectTo: window.location.origin },
+          options: { data: { full_name: fullName, career_goal: role }, emailRedirectTo: appRedirectUrl() },
         });
         if (authError) throw authError;
         if (!data.session) setMessage('Account created. Check your email for the confirmation link, then sign in.');
@@ -160,7 +165,7 @@ function AuthScreen(props: { onDemo: () => void; onBack: () => void }) {
         const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
         if (authError) throw authError;
       } else {
-        const { error: authError } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+        const { error: authError } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: appRedirectUrl() });
         if (authError) throw authError;
         setMessage('If an account exists for that email, a password reset link is on its way.');
       }
@@ -176,7 +181,7 @@ function AuthScreen(props: { onDemo: () => void; onBack: () => void }) {
     setError('');
     setPending(true);
     try {
-      const { error: authError } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } });
+      const { error: authError } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: appRedirectUrl() } });
       if (authError) { setError(authError.message); setPending(false); }
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : 'Google sign-in could not start.');
@@ -273,9 +278,15 @@ export default function CareerWorkspace() {
   const [coverLetter, setCoverLetter] = useState('');
   const [interviewAnswer, setInterviewAnswer] = useState('');
   const [profileSaved, setProfileSaved] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => localStorage.getItem('talenthunt:theme') === 'dark' ? 'dark' : 'light');
   const [toast, setToast] = useState('');
   const storageOwner = session?.user.id ?? 'demo';
   const hydratedUserId = useRef<string | null>(null);
+
+  const updateTheme = (nextTheme: 'light' | 'dark') => {
+    setTheme(nextTheme);
+    localStorage.setItem('talenthunt:theme', nextTheme);
+  };
 
   useEffect(() => {
     if (!supabase) return;
@@ -616,7 +627,7 @@ export default function CareerWorkspace() {
   if (!session && !demoAccess) return <AuthScreen onDemo={() => setDemoAccess(true)} onBack={() => setShowLanding(true)} />;
 
   return (
-    <div className="career-app">
+    <div className="career-app" data-theme={theme}>
       <aside className="career-sidebar">
         <button className="career-brand" type="button" onClick={() => setSection('dashboard')}>
           <span className="career-brand-mark">T</span><span><strong>TalentHUNT</strong><small>CAREER STUDIO</small></span>
@@ -699,7 +710,7 @@ export default function CareerWorkspace() {
 
           {section === 'profile' && <ProfileSection candidate={candidate} setCandidate={setCandidate} onSubmit={saveProfile} saved={profileSaved} />}
 
-          {section === 'settings' && <ProfileSection candidate={candidate} setCandidate={setCandidate} onSubmit={saveProfile} saved={profileSaved} />}
+          {section === 'settings' && <SettingsSection theme={theme} onThemeChange={updateTheme} onLogout={signOut} />}
         </div>
       </main>
     </div>
@@ -1125,6 +1136,28 @@ function ProfileSection(props: { candidate: Candidate; setCandidate: (candidate:
       </form>
     </section>
     <section className="surface-card privacy-card"><div className="card-heading"><div><p className="section-kicker">PRIVACY NOTES</p><h2>What this demo does—and doesn’t—do</h2></div><ShieldCheck size={20} className="heading-icon" /></div><ul>{databasePolicySummary.map((item) => <li key={item}><CheckCircle2 size={15} />{item}</li>)}</ul><p className="muted-copy">Resume text remains in app memory only for this session. Legacy DOC and consented AI analysis are sent transiently to configured Edge Functions; the AI provider’s own retention terms apply. Profile and application metadata are stored per account in browser local storage.</p></section>
+  </div>;
+}
+
+function SettingsSection(props: { theme: 'light' | 'dark'; onThemeChange: (theme: 'light' | 'dark') => void; onLogout: () => void }) {
+  return <div className="section-stack settings-stack">
+    <section className="surface-card settings-panel">
+      <div className="card-heading"><div><p className="section-kicker">APPEARANCE</p><h2>Color theme</h2></div></div>
+      <div className="settings-theme-options" role="group" aria-label="Color theme">
+        <button type="button" className={`settings-theme-option ${props.theme === 'light' ? 'selected' : ''}`} aria-pressed={props.theme === 'light'} onClick={() => props.onThemeChange('light')}><Sun size={17} />Light</button>
+        <button type="button" className={`settings-theme-option ${props.theme === 'dark' ? 'selected' : ''}`} aria-pressed={props.theme === 'dark'} onClick={() => props.onThemeChange('dark')}><Moon size={17} />Dark</button>
+      </div>
+      <p className="settings-note">Your appearance preference is saved on this device.</p>
+    </section>
+    <section className="surface-card settings-panel">
+      <div className="card-heading"><div><p className="section-kicker">WE’RE HERE TO HELP</p><h2>Customer support</h2></div><LifeBuoy size={19} className="heading-icon" /></div>
+      <p className="settings-description">Questions or feedback? Get in touch with the TalentHUNT support team.</p>
+      <a className="button button-outline settings-support-link" href="mailto:support@talenthunt.ai?subject=TalentHUNT%20support"><Mail size={16} />Contact support</a>
+    </section>
+    <section className="surface-card settings-panel settings-account-panel">
+      <div><p className="section-kicker">ACCOUNT</p><h2>Sign out</h2><p className="settings-description">End this session on this device.</p></div>
+      <button className="button button-outline settings-logout-button" type="button" onClick={props.onLogout}><LogOut size={16} />Log out</button>
+    </section>
   </div>;
 }
 
